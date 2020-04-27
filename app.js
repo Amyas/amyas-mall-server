@@ -7,6 +7,7 @@ const json = require('koa-json');
 const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('./lib/logger').logger('app');
+const Helper = require('./helpers');
 
 require('./lib/mongoose');
 
@@ -29,6 +30,7 @@ app.use(views(__dirname + '/views', {
 
 try {
   app.use(async (ctx, next) => {
+    ctx.helper = Helper;
     const start = new Date();
     await next();
     const ms = new Date() - start;
