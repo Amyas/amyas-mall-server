@@ -8,6 +8,8 @@ const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
 const logger = require('./lib/logger').logger('app');
 
+require('./lib/mongoose');
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 
