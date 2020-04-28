@@ -5,7 +5,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node bin/www",
     "dev": "cross-env NODE_ENV=development ./node_modules/.bin/nodemon bin/www",
-    "prd": "cross-env NODE_ENV=production pm2 start bin/www"
+    "prd": "cross-env NODE_ENV=production pm2 start bin/www",
+    "doc": "apidoc -i controllers/ -o docs/"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
@@ -24,6 +25,7 @@
     "pug": "^2.0.3"
   },
   "devDependencies": {
+    "apidoc": "^0.22.0",
     "eslint": "^6.8.0",
     "eslint-config-egg": "^8.0.1",
     "nodemon": "^1.19.1"
