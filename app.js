@@ -4,18 +4,19 @@ const Koa = require('koa');
 const app = new Koa();
 const views = require('koa-views');
 const json = require('koa-json');
-const onerror = require('koa-onerror');
 const bodyparser = require('koa-bodyparser');
+
 const logger = require('./lib/logger').logger('app');
-const Helper = require('./helpers');
+const validate = require('./lib/validate');
 
 require('./lib/mongoose');
+
+const Helper = require('./helpers');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 
-// error handler
-onerror(app);
+validate(app);
 
 // middlewares
 app.use(bodyparser({
