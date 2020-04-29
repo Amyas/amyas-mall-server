@@ -9,6 +9,7 @@ const $ = require('../controllers');
 // 用户
 router
   .post('/user', $.user.create)
-  .delete('/user/:id', $.user.delete);
+  .delete('/user/:id', $.user.delete)
+  .put('/user/:id', $.user.update);
 
 module.exports = router;

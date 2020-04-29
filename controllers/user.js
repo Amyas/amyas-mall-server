@@ -41,12 +41,11 @@ exports.create = async ctx => {
  *
  * @api {DELETE} /user/:id 删除用户
  * @apiGroup user
- * @apiParam  {String} id 用户id
  *
  */
 
 exports.delete = async ctx => {
-  const logPrefix = '创建用户';
+  const logPrefix = '更新用户';
 
   const id = ctx.params.id;
 
@@ -60,4 +59,38 @@ exports.delete = async ctx => {
   ctx.body = ctx.helper.success('删除成功');
 
   logger.info(logPrefix, id);
+};
+
+/**
+ *
+ * @api {PUT} /user/:id 更新用户
+ * @apiGroup user
+ * @apiParam  {String} [password] 密码
+ * @apiParam  {String} [name] 昵称
+ *
+ */
+
+exports.update = async ctx => {
+  const logPrefix = '修改用户';
+
+  const filter = [ 'password', 'name' ];
+  const rules = {
+    password: { type: 'string', required: false },
+    name: { type: 'string', required: false },
+  };
+
+  const id = ctx.params.id;
+  const data = await ctx.helper.filterParams(ctx.request.body, filter);
+  ctx.validate(rules, data);
+
+  const user = await ctx.model.user.findByIdAndUpdate(id, { $set: data });
+
+  if (!user) {
+    ctx.body = ctx.helper.fail('用户不存在');
+    return;
+  }
+
+  ctx.body = ctx.helper.success('修改成功');
+
+  logger.info(logPrefix, id, data);
 };
