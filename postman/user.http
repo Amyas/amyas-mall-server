@@ -1,0 +1,22 @@
+@host = http://127.0.0.1:3000/api
+@ContentType = application/json
+
+### 获取用户
+POST {{host}}/user
+Content-Type: {{ContentType}}
+
+{
+  "username":"tom",
+  "password":"123",
+  "name":"Tom"
+}
+
+### 删除用户
+DELETE {{host}}/user/5ea9376feee803603b77ef11
+
+### 修改用户
+PUT {{host}}/user/5ea7d1d34f994834d085c331
+Content-Type: {{ContentType}}
+
+### 获取用户列表
+GET {{host}}/user
