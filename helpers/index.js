@@ -8,9 +8,9 @@ exports.success = data => ({
   data,
 });
 
-exports.fail = (errCode, message) => ({
+exports.fail = message => ({
   status: {
-    errCode,
+    errCode: 1,
     message,
   },
 });

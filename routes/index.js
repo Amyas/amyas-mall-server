@@ -1,21 +1,14 @@
 'use strict';
 
-const router = require('koa-router')();
-
-router.get('/', async ctx => {
-  ctx.body = ctx.helper.success({
-    name: 'Amyas',
-  });
+const router = require('koa-router')({
+  prefix: '/api',
 });
 
-router.get('/string', async ctx => {
-  ctx.body = ctx.helper.fail(10001, '错误测试');
-});
+const $ = require('../controllers');
 
-router.get('/json', async ctx => {
-  ctx.body = {
-    title: 'koa2 json',
-  };
-});
+// 用户
+router
+  .get('/user', $.user.index)
+  .post('/user', $.user.create);
 
 module.exports = router;
