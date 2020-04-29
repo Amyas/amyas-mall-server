@@ -10,6 +10,7 @@ const $ = require('../controllers');
 router
   .post('/user', $.user.create)
   .delete('/user/:id', $.user.delete)
-  .put('/user/:id', $.user.update);
+  .put('/user/:id', $.user.update)
+  .get('/user', $.user.index);
 
 module.exports = router;

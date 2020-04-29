@@ -94,3 +94,37 @@ exports.update = async ctx => {
 
   logger.info(logPrefix, id, data);
 };
+
+/**
+ * @api {GET} /api/user 用户列表
+ * @apiGroup user
+ * @apiParam  {String} [pageNumber=1] 当前页数
+ * @apiParam  {String} [pageSize=20] 每页显示的个数
+ */
+
+exports.index = async ctx => {
+  const logPrefix = '获取用户列表';
+
+  const {
+    pageNumber,
+    pageSize,
+    sortBy,
+    orderBy,
+    filter,
+  } = await ctx.helper.handleQuery(ctx.query);
+
+  const [ items, total ] = await Promise.all([
+    ctx.model.user.find(filter, { password: 0 })
+      .skip((pageNumber - 1) * pageSize)
+      .limit(pageSize)
+      .sort({ [sortBy]: orderBy }),
+    ctx.model.user.count(filter),
+  ]);
+
+  ctx.body = ctx.helper.success({
+    items,
+    total,
+  });
+
+  logger.info(logPrefix, ctx.query, items, total);
+};
