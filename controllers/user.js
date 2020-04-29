@@ -3,7 +3,7 @@
 const logger = require('../lib/logger').logger('controller-user');
 
 /**
- * @api {POST} /api/user 创建用户
+ * @api {POST} /user 创建用户
  * @apiGroup user
  * @apiParam  {String} username 账号
  * @apiParam  {String} password 密码
@@ -35,4 +35,29 @@ exports.create = async ctx => {
   ctx.body = ctx.helper.success('创建成功');
 
   logger.info(logPrefix, data);
+};
+
+/**
+ *
+ * @api {DELETE} /user/:id 删除用户
+ * @apiGroup user
+ * @apiParam  {String} id 用户id
+ *
+ */
+
+exports.delete = async ctx => {
+  const logPrefix = '创建用户';
+
+  const id = ctx.params.id;
+
+  const user = await ctx.model.user.remove({ _id: id });
+
+  if (user.n !== 1) {
+    ctx.body = ctx.helper.fail('用户不存在');
+    return;
+  }
+
+  ctx.body = ctx.helper.success('删除成功');
+
+  logger.info(logPrefix, id);
 };
