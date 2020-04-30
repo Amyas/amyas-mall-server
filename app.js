@@ -10,6 +10,7 @@ const middleware = require('./middleware');
 
 const logger = require('./lib/logger').logger('app');
 const validate = require('./lib/validate');
+const { session, redis } = require('./lib/redis');
 require('./lib/mongoose');
 
 const helper = require('./helpers');
@@ -34,11 +35,13 @@ try {
     .use(async (ctx, next) => {
       ctx.helper = helper;
       ctx.model = models;
+      ctx.redis = redis;
       const start = new Date();
       await next();
       const ms = new Date() - start;
       logger.info(`${ctx.method} ${ctx.url} - ${ms}ms`);
     })
+    .use(session())
     .use(middleware())
     .use(routes.routes(), routes.allowedMethods());
 } catch (error) {
