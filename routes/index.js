@@ -8,7 +8,8 @@ const $ = require('../controllers');
 
 // 权限
 router
-  .post('/sign-in', $.auth.signIn); // 登陆
+  .post('/sign-in', $.auth.signIn) // 登陆
+  .post('/sign-out', $.auth.signOut); // 退出
 
 // 用户
 router

@@ -3,7 +3,7 @@
 const logger = require('../lib/logger').logger('controller-auth');
 
 /**
- * @api {POST} /signIn 登陆
+ * @api {POST} /sign-in 登陆
  * @apiGroup auth
  * @apiParam  {String} username 账号
  * @apiParam  {String} password 密码
@@ -31,4 +31,21 @@ exports.signIn = async ctx => {
   ctx.body = ctx.helper.success('登陆成功');
 
   logger.info(logPrefix, data);
+};
+
+/**
+ * @api {POST} /sign-out 退出
+ * @apiGroup auth
+ */
+
+exports.signOut = async ctx => {
+  const logPrefix = '退出登陆';
+
+  const user = ctx.session.user;
+
+  ctx.session = null;
+
+  ctx.body = ctx.helper.success('退出成功');
+
+  logger.info(logPrefix, user);
 };
