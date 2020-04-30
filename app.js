@@ -17,6 +17,7 @@ const helper = require('./helpers');
 const models = require('./models');
 const routes = require('./routes');
 
+app.keys = [ 'amyas_mall_session_token' ];
 
 // middlewares
 app.use(bodyparser({

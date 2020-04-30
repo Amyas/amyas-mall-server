@@ -6,6 +6,10 @@ const router = require('koa-router')({
 
 const $ = require('../controllers');
 
+// 权限
+router
+  .post('/sign-in', $.auth.signIn); // 登陆
+
 // 用户
 router
   .post('/user', $.user.create)

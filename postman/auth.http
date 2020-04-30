@@ -1,0 +1,12 @@
+@host = http://127.0.0.1:3000/api
+@ContentType = application/json
+
+### 登陆
+POST {{host}}/sign-in
+Content-Type: {{ContentType}}
+
+{
+  "username":"tom",
+  "password":"123",
+  "name":"Tom"
+}
