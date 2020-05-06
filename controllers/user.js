@@ -114,7 +114,7 @@ exports.index = async ctx => {
   } = await ctx.helper.handleQuery(ctx.query);
 
   const [ items, total ] = await Promise.all([
-    ctx.model.user.find(filter, { password: 0 })
+    ctx.model.user.find(filter)
       .skip((pageNumber - 1) * pageSize)
       .limit(pageSize)
       .sort({ [sortBy]: orderBy }),
