@@ -23,7 +23,7 @@ exports.create = async ctx => {
   ctx.validate(rules, data);
 
   try {
-    const user = new ctx.model.user(data);
+    const user = new ctx.model.User(data);
     await user.save();
   } catch (error) {
     if (error.code === 11000) {
@@ -49,7 +49,7 @@ exports.delete = async ctx => {
 
   const id = ctx.params.id;
 
-  const user = await ctx.model.user.remove({ _id: id });
+  const user = await ctx.model.User.remove({ _id: id });
 
   if (user.n !== 1) {
     ctx.body = ctx.helper.fail('用户不存在');
@@ -83,7 +83,7 @@ exports.update = async ctx => {
   const data = await ctx.helper.filterParams(ctx.request.body, filter);
   ctx.validate(rules, data);
 
-  const user = await ctx.model.user.findByIdAndUpdate(id, { $set: data });
+  const user = await ctx.model.User.findByIdAndUpdate(id, { $set: data });
 
   if (!user) {
     ctx.body = ctx.helper.fail('用户不存在');
@@ -114,11 +114,11 @@ exports.index = async ctx => {
   } = await ctx.helper.handleQuery(ctx.query);
 
   const [ items, total ] = await Promise.all([
-    ctx.model.user.find(filter)
+    ctx.model.User.find(filter)
       .skip((pageNumber - 1) * pageSize)
       .limit(pageSize)
       .sort({ [sortBy]: orderBy }),
-    ctx.model.user.count(filter),
+    ctx.model.User.count(filter),
   ]);
 
   ctx.body = ctx.helper.success({
