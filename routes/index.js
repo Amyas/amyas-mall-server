@@ -18,4 +18,11 @@ router
   .put('/user/:id', $.user.update)
   .get('/user', $.user.index);
 
+// 商品分类
+router
+  .post('/goods-cate', $.goodsCate.create)
+  .delete('/goods-cate/:id', $.goodsCate.delete)
+  .put('/goods-cate/:id', $.goodsCate.update)
+  .get('/goods-cate', $.goodsCate.index);
+
 module.exports = router;

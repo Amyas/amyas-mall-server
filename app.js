@@ -16,6 +16,7 @@ require('./lib/mongoose');
 const helper = require('./helpers');
 const models = require('./models');
 const routes = require('./routes');
+const service = require('./services');
 
 app.keys = [ 'amyas_mall_session_token' ];
 
@@ -37,6 +38,7 @@ try {
       ctx.helper = helper;
       ctx.model = models;
       ctx.redis = redis;
+      ctx.service = service;
       const start = new Date();
       await next();
       const ms = new Date() - start;
