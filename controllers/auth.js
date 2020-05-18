@@ -20,7 +20,7 @@ exports.signIn = async ctx => {
 
   ctx.validate(rules, data);
 
-  const user = await ctx.model.user.findOne(data);
+  const user = await ctx.model.User.findOne(data);
 
   if (!user) {
     ctx.body = ctx.helper.fail('账号密码错误');
