@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const mall = require('../lib/mongoose').mall;
+const { ObjectId } = mongoose.Schema.Types;
 
 const UserSchema = new mongoose.Schema({
   // 账号
@@ -19,6 +20,10 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+  },
+  _role: {
+    type: ObjectId,
+    ref: 'Role',
   },
   createTime: {
     type: Number,

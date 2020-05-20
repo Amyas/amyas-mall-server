@@ -8,6 +8,7 @@ const logger = require('../lib/logger').logger('controller-user');
  * @apiParam  {String} username 账号
  * @apiParam  {String} password 密码
  * @apiParam  {String} name 名字
+ * @apiParam  {String} _role 角色
  */
 
 exports.create = async ctx => {
@@ -18,6 +19,7 @@ exports.create = async ctx => {
     username: 'string',
     password: 'string',
     name: 'string',
+    _role: 'string',
   };
 
   ctx.validate(rules, data);
@@ -67,16 +69,18 @@ exports.delete = async ctx => {
  * @apiGroup user
  * @apiParam  {String} [password] 密码
  * @apiParam  {String} [name] 昵称
+ * @apiParam  {String} [_role] 角色
  *
  */
 
 exports.update = async ctx => {
   const logPrefix = '修改用户';
 
-  const filter = [ 'password', 'name' ];
+  const filter = [ 'password', 'name', '_role' ];
   const rules = {
     password: { type: 'string', required: false },
     name: { type: 'string', required: false },
+    _role: { type: 'string', required: false },
   };
 
   const id = ctx.params.id;
@@ -115,6 +119,7 @@ exports.index = async ctx => {
 
   const [ items, total ] = await Promise.all([
     ctx.model.User.find(filter)
+      .populate('_role')
       .skip((pageNumber - 1) * pageSize)
       .limit(pageSize)
       .sort({ [sortBy]: orderBy }),
