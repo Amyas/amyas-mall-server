@@ -25,4 +25,11 @@ router
   .put('/goods-cate/:id', $.goodsCate.update)
   .get('/goods-cate', $.goodsCate.index);
 
+// 菜单管理
+router
+  .post('/menu', $.menu.create)
+  .delete('/menu/:id', $.menu.delete)
+  .put('/menu/:id', $.menu.update)
+  .get('/menu', $.menu.index);
+
 module.exports = router;
