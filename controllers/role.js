@@ -61,16 +61,18 @@ exports.delete = async ctx => {
  *
  * @api {PUT} /role/:id 更新角色
  * @apiGroup role
- * @apiParam  {String} role_name 菜单名称
+ * @apiParam  {String} role_name 角色名称
+ * @apiParam  {Array} [role_menu] 角色菜单
  *
  */
 
 exports.update = async ctx => {
   const logPrefix = '更新角色';
 
-  const filter = [ 'role_name' ];
+  const filter = [ 'role_name', 'role_menu' ];
   const rules = {
     role_name: { type: 'string', required: true },
+    role_menu: { type: 'array', required: false },
   };
 
   const id = ctx.params.id;
@@ -83,6 +85,23 @@ exports.update = async ctx => {
     ctx.body = ctx.helper.fail('角色不存在');
     return;
   }
+
+  await Promise.all(
+    data.role_menu.map(_menu =>
+      ctx.model.RoleMenu.findOneAndUpdate({
+        _role: id,
+        _menu,
+      }, {
+        _role: id,
+        _menu,
+      }, { upsert: true })
+    )
+  );
+
+  await ctx.model.RoleMenu.deleteMany({
+    _role: id,
+    _menu: { $nin: data.role_menu },
+  });
 
   ctx.body = ctx.helper.success('修改成功');
 
@@ -113,8 +132,25 @@ exports.index = async ctx => {
     ctx.model.Role.count(filter),
   ]);
 
+  const roleMenu = await Promise.all(
+    items.map(
+      role => ctx.model.RoleMenu
+        .find({
+          _role: role._id,
+        }).populate('_menu')
+    )
+  );
+
+  const resItems = [];
+  items.forEach((role, roleIndex) => {
+    role = role.toJSON();
+    const role_menu = roleMenu[roleIndex].filter(v => String(v._role) === String(role._id));
+    role.role_menu = role_menu;
+    resItems.push(role);
+  });
+
   ctx.body = ctx.helper.success({
-    items,
+    items: resItems,
     total,
   });
 
