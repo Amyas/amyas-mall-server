@@ -32,4 +32,11 @@ router
   .put('/menu/:id', $.menu.update)
   .get('/menu', $.menu.index);
 
+// 角色管理
+router
+  .post('/role', $.role.create)
+  .delete('/role/:id', $.role.delete)
+  .put('/role/:id', $.role.update)
+  .get('/role', $.role.index);
+
 module.exports = router;
