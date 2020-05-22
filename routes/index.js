@@ -9,7 +9,8 @@ const $ = require('../controllers');
 // 权限
 router
   .post('/sign-in', $.auth.signIn) // 登陆
-  .post('/sign-out', $.auth.signOut); // 退出
+  .post('/sign-out', $.auth.signOut) // 退出
+  .get('/user-menu', $.auth.userMenu); // 用户菜单
 
 // 用户
 router

@@ -28,7 +28,7 @@ exports.signIn = async ctx => {
   }
 
   ctx.session.user = user;
-  ctx.body = ctx.helper.success('登陆成功');
+  ctx.body = ctx.helper.success(user);
 
   logger.info(logPrefix, data);
 };
@@ -48,4 +48,41 @@ exports.signOut = async ctx => {
   ctx.body = ctx.helper.success('退出成功');
 
   logger.info(logPrefix, user);
+};
+
+/**
+ * @api {GET} /user-menu 用户菜单
+ * @apiGroup auth
+ */
+
+exports.userMenu = async ctx => {
+  const logPrefix = '获取用户菜单';
+  const user = ctx.session.user;
+  const roleId = user._role;
+
+  // 获取用户角色菜单
+  const roleMenu = await ctx.model.RoleMenu.find({
+    _role: roleId,
+  }).populate('_menu');
+
+
+  const res = [];
+  for (let i = 0; i < roleMenu.length; i++) {
+    const menu = roleMenu[i]._menu.toJSON();
+    if (!menu._parent) {
+      res.push(Object.assign({}, menu, {
+        children: [],
+      }));
+      continue;
+    }
+
+    const parent = res.find(v => String(v._id) === String(menu._parent));
+
+    parent.children.push(menu);
+  }
+
+
+  ctx.body = ctx.helper.success(res);
+
+  logger.info(logPrefix, user, roleMenu);
 };
