@@ -40,14 +40,12 @@ exports.create = async ctx => {
 };
 
 /**
- *
  * @api {DELETE} /user/:id 删除用户
  * @apiGroup user
- *
  */
 
 exports.delete = async ctx => {
-  const logPrefix = '更新用户';
+  const logPrefix = '删除用户';
 
   const id = ctx.params.id;
 
@@ -64,13 +62,11 @@ exports.delete = async ctx => {
 };
 
 /**
- *
  * @api {PUT} /user/:id 更新用户
  * @apiGroup user
  * @apiParam  {String} [password] 密码
  * @apiParam  {String} [name] 昵称
  * @apiParam  {String} [_role] 角色
- *
  */
 
 exports.update = async ctx => {
