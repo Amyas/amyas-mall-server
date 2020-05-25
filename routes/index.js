@@ -6,6 +6,10 @@ const router = require('koa-router')({
 
 const $ = require('../controllers');
 
+// 工具
+router
+  .post('/upload', $.utils.uploadfile); // 上传文件
+
 // 权限
 router
   .post('/sign-in', $.auth.signIn) // 登陆
@@ -39,5 +43,12 @@ router
   .delete('/role/:id', $.role.delete)
   .put('/role/:id', $.role.update)
   .get('/role', $.role.index);
+
+// 商品管理
+router
+  .post('/goods', $.goods.create)
+  .delete('/goods/:id', $.goods.delete)
+  .put('/goods/:id', $.goods.update)
+  .get('/goods', $.goods.index);
 
 module.exports = router;

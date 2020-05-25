@@ -4,7 +4,8 @@ const Koa = require('koa');
 const app = new Koa();
 const views = require('koa-views');
 const json = require('koa-json');
-const bodyparser = require('koa-bodyparser');
+// const bodyparser = require('koa-bodyparser');
+const koaBody = require('koa-body');
 
 const middleware = require('./middleware');
 
@@ -21,8 +22,14 @@ const service = require('./services');
 app.keys = [ 'amyas_mall_session_token' ];
 
 // middlewares
-app.use(bodyparser({
-  enableTypes: [ 'json', 'form', 'text' ],
+// app.use(bodyparser({
+//   enableTypes: [ 'json', 'form', 'text' ],
+// }));
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+    maxFileSize: 20 * 1024 * 1024, // 设置上传文件最大限制，模式2M
+  },
 }));
 app.use(json());
 app.use(require('koa-static')(__dirname + '/public'));
