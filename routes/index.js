@@ -51,4 +51,8 @@ router
   .put('/goods/:id', $.goods.update)
   .get('/goods', $.goods.index);
 
+// 用户行为
+router
+  .post('/u-action/add-shop-cart', $.uAction.addShopCart);
+
 module.exports = router;
