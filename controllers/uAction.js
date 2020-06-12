@@ -51,7 +51,7 @@ exports.queryShopCart = async ctx => {
 };
 
 /**
- * @api {GET} /u-action/remove-shop-cart 删除购物车
+ * @api {PUT} /u-action/remove-shop-cart 删除购物车
  * @apiGroup uAction
  */
 
@@ -65,4 +65,39 @@ exports.removeShopCart = async ctx => {
   ctx.body = ctx.helper.success(item);
 
   logger.info(logPrefix, item);
+};
+
+
+/**
+ * @api {POST} /u-action/submit-order 提交订单
+ * @apiGroup uAction
+ * @apiParam  {String} _user 用户id
+ * @apiParam  {Array} goods_list 商品列表
+ */
+
+exports.submitOrder = async ctx => {
+  const logPrefix = '提交订单';
+
+  const data = ctx.request.body;
+
+  const rules = {
+    _user: { type: 'string', required: true },
+    goods_list: { type: 'array', required: true },
+  };
+
+  ctx.validate(rules, data);
+
+
+  data.order_price = data.goods_list.reduce((total, current) => total + current.goods_price, 0);
+
+  const order = new ctx.model.Order(data);
+  await order.save();
+
+  await ctx.model.ShopCart.deleteMany({
+    _user: data._user,
+  });
+
+  ctx.body = ctx.helper.success(order);
+
+  logger.info(logPrefix, order);
 };

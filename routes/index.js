@@ -55,6 +55,7 @@ router
 router
   .post('/u-action/add-shop-cart', $.uAction.addShopCart)
   .get('/u-action/query-shop-cart/:id', $.uAction.queryShopCart)
-  .put('/u-action/remove-shop-cart/:id', $.uAction.removeShopCart);
+  .put('/u-action/remove-shop-cart/:id', $.uAction.removeShopCart)
+  .post('/u-action/submit-order', $.uAction.submitOrder);
 
 module.exports = router;
