@@ -31,7 +31,7 @@ exports.handleQuery = async query => {
   const result = {
     pageNumber: Number(newQuery.pageNumber) || 1, // 页数
     pageSize: Number(newQuery.pageSize) || 20, // 每页个数
-    sortBy: newQuery.sortBy || 'createTime', // 排序字段
+    sortBy: newQuery.sortBy || 'updateTime', // 排序字段
     orderBy: Number(newQuery.orderBy) || -1, // 1 - 升序， -1 - 降序
   };
   delete newQuery.pageNumber;
