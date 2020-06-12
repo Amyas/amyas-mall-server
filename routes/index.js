@@ -53,6 +53,8 @@ router
 
 // 用户行为
 router
-  .post('/u-action/add-shop-cart', $.uAction.addShopCart);
+  .post('/u-action/add-shop-cart', $.uAction.addShopCart)
+  .get('/u-action/query-shop-cart/:id', $.uAction.queryShopCart)
+  .put('/u-action/remove-shop-cart/:id', $.uAction.removeShopCart);
 
 module.exports = router;
