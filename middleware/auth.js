@@ -4,7 +4,7 @@ const logger = require('../lib/logger').logger('middleware-auth');
 
 module.exports = () => async (ctx, next) => {
   try {
-    if (ctx.request.url === '/api/sign-in') {
+    if (ctx.request.url === '/api/sign-in' || ctx.request.url.includes('dependence')) {
       await next();
       return;
     }
