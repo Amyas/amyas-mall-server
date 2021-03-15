@@ -58,13 +58,4 @@ router
   .put('/u-action/remove-shop-cart/:id', $.uAction.removeShopCart)
   .post('/u-action/submit-order', $.uAction.submitOrder);
 
-
-// 依赖管理
-router
-  .get('/dependence', $.dependence.update);
-// .delete('/menu/:id', $.menu.delete)
-// .put('/menu/:id', $.menu.update)
-// .get('/menu', $.menu.index);
-
-
 module.exports = router;
