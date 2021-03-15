@@ -58,4 +58,11 @@ router
   .put('/u-action/remove-shop-cart/:id', $.uAction.removeShopCart)
   .post('/u-action/submit-order', $.uAction.submitOrder);
 
+// 面试题管理
+router
+  .post('/topic', $.topic.create)
+  .delete('/topic/:id', $.topic.delete)
+  .put('/topic/:id', $.topic.update)
+  .get('/topic', $.topic.index);
+
 module.exports = router;
