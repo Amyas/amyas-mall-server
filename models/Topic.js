@@ -10,10 +10,14 @@ const TopicSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // 面试题类型
+  topic_type: {
+    type: String,
+    enum: [ 'http', 'css', 'js', 'vue', 'webpack', 'algorithm', 'adaptation', 'framework' ],
+  },
   // 面试题解析
   topic_analysis: {
     type: String,
-    required: true,
   },
   createTime: {
     type: Number,

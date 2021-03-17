@@ -6,6 +6,7 @@ const logger = require('../lib/logger').logger('controller-topic');
  * @api {POST} /topic 创建面试题
  * @apiGroup topic
  * @apiParam  {String} topic_name       面试题名称
+ * @apiParam  {String} topic_type       面试题类型
  * @apiParam  {String} topic_analysis   面试题解析
  */
 
@@ -15,7 +16,8 @@ exports.create = async ctx => {
 
   const rules = {
     topic_name: { type: 'string', required: true },
-    topic_analysis: { type: 'string', required: true },
+    topic_type: { type: 'string', required: true },
+    topic_analysis: { type: 'string', required: false },
   };
 
   ctx.validate(rules, data);
@@ -63,6 +65,7 @@ exports.delete = async ctx => {
  * @api {PUT} /topic/:id 更新面试题
  * @apiGroup topic
  * @apiParam  {String} [topic_name]     面试题名称
+ * @apiParam  {String} [topic_type]     面试题类型
  * @apiParam  {String} [topic_analysis] 面试题解析
  */
 
@@ -71,11 +74,13 @@ exports.update = async ctx => {
 
   const filter = [
     'topic_name',
+    'topic_type',
     'topic_analysis',
   ];
 
   const rules = {
     topic_name: { type: 'string', required: false },
+    topic_type: { type: 'string', required: false },
     topic_analysis: { type: 'string', required: false },
   };
 
@@ -94,6 +99,7 @@ exports.update = async ctx => {
 
   logger.info(logPrefix, id, data);
 };
+
 
 /**
  * @api {GET} /api/topic 面试题列表
